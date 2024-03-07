@@ -1,0 +1,15 @@
+{
+  "name": "firstbackend",
+  "version": "1.0.0",
+  "description": "this is my first backend project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "mongoDB"
+  ],
+  "author": "udittyagi455",
+  "license": "ISC"
+}
