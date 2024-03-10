@@ -18,19 +18,25 @@ const registerUser = asyncHandler(async (req, res) => {
   const { username, email, fullName, password } = req.body;
   console.log(
     "request-body content ====>",
-    username,
+    username?.trim().length,
     email,
     fullName,
     password
   );
 
-  if (
-    [username, email, fullName, password].some(
-      (field) => !!field?.trim() == false
-    )
-  ) {
+  if ([username, email, fullName, password].some((field) => !field)) {
     throw new ApiError(400, "All Fields are required!");
   }
+  if (username.trim().length < 3) {
+    throw new ApiError(400, "Username field are wrong");
+  }
+  if (password.trim().length < 6) {
+    throw new ApiError(400, "Password field are wrong");
+  }
+  if (fullName.trim().length < 3) {
+    throw new ApiError(400, "fullName field are wrong");
+  }
+
   if (!email?.includes("@")) {
     throw new ApiError(400, "Email Address Not Valid!");
   }
@@ -47,7 +53,11 @@ const registerUser = asyncHandler(async (req, res) => {
   // const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
   let coverImageLocalPath;
-  if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0){
+  if (
+    req.files &&
+    Array.isArray(req.files.coverImage) &&
+    req.files.coverImage.length > 0
+  ) {
     coverImageLocalPath = req.files.coverImage[0].path;
   }
 
