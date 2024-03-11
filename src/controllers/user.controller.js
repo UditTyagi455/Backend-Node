@@ -7,7 +7,7 @@ import { UserModel } from "../models/user.model.js";
 
 const generateAccessAndRefreshTokens = async (userId) =>{
   try {
-      const user = await User.findById(userId);
+      const user = await UserModel.findById(userId);
       const accessToken = user.generateAccessToken()
       const refreshToken = user.generateRefreshToken();
 
@@ -144,7 +144,7 @@ const loginUser = asyncHandler(async(req,res) => {
 
    const {accessToken,refreshToken} = await generateAccessAndRefreshTokens(existUser._id);
  
-    const loggedInUser = await existUser.findById(existUser._id).select("-password -refreshToken")
+    const loggedInUser = await UserModel.findById(existUser._id).select("-password -refreshToken")
 
     const options = {
       httpOnly: true,
@@ -179,7 +179,9 @@ await UserModel.findByIdAndUpdate(
   {
     new : true
   }
-)
+);
+
+const {accessToken,refreshToken} = await generateAccessAndRefreshTokens(req.user._id);
 
 const options = {
   httpOnly: true,
