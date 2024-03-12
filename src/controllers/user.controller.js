@@ -308,7 +308,8 @@ const updateAccoutDetails = asyncHandler(async (req, res) => {
 });
 
 const updateUserAvatar = asyncHandler(async (req, res) => {
-  const avtarLocalPath = req.file?.path;
+  const avtarLocalPath = req.files?.avatar[0].path;
+  console.log("file-path :::",req.files);
 
   if (!avtarLocalPath) {
     throw new ApiError(401, "Avtar Local path wrong");
