@@ -260,8 +260,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 
   const user = await UserModel.findById(req?.user._id);
 
-  const isPasswordCorrect =await user.isPasswordCorrect(currentPassword);
-
+  const isPasswordCorrect = await user.isPasswordCorrect(currentPassword);
 
   if (!isPasswordCorrect) {
     throw new ApiError(400, "Invalid old password");
@@ -309,7 +308,7 @@ const updateAccoutDetails = asyncHandler(async (req, res) => {
 
 const updateUserAvatar = asyncHandler(async (req, res) => {
   const avtarLocalPath = req.files?.avatar[0].path;
-  console.log("file-path :::",req.files);
+  console.log("file-path :::", req.files);
 
   if (!avtarLocalPath) {
     throw new ApiError(401, "Avtar Local path wrong");
@@ -338,8 +337,8 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "avatar updated successfully"));
 });
 
-const updateCoverImage= asyncHandler(async (req, res) => {
-  const coverImageLocalPath = req.file?.path;
+const updateCoverImage = asyncHandler(async (req, res) => {
+  const coverImageLocalPath = req.files?.coverImage[0].path;
 
   if (!coverImageLocalPath) {
     throw new ApiError(401, "Cover Image Local path wrong");
@@ -347,7 +346,7 @@ const updateCoverImage= asyncHandler(async (req, res) => {
 
   const coverImage = await uploadOnCloudinary(coverImageLocalPath);
 
-  if (!avatar.url) {
+  if (!coverImage.url) {
     throw new ApiError(401, "Error while uploading coverImage");
   }
 
@@ -377,5 +376,5 @@ export {
   getCurrentUser,
   updateAccoutDetails,
   updateUserAvatar,
-  updateCoverImage
+  updateCoverImage,
 };
